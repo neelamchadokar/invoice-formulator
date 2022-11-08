@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer {
+    .edit{
+        @apply p-2 rounded-md shadow-inner
+    }
+    .resp{
+        @apply flex flex-col sm:flex-row justify-evenly
+    }
+    .rate{
+        @apply w-[100px] text-right
+    }
+    .amount{
+        @apply w-[100px] text-right 
+    }
+    .grid-b{
+        @apply sm:bg-green-400
+    }
+    .upper{
+        @apply uppercase
+    }
+    .tax-box{
+        @apply p-3 px-4 bg-gray-200 rounded-xl shadow-xl max-w-[290px]
+    }
+    .tax-grid{
+        @apply grid grid-cols-2 w-[225px] mt-1
+    }
+    .tax{
+        @apply pt-2
+    }
+    .navMenu{
+        @apply text-center p-4 inline-block w-1/4 shadow-md shadow-green-600 rounded-md shadow-inner
+    }
+}

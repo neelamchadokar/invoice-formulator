@@ -1,0 +1,116 @@
+/* work sans font */
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
+.formulate-input-wrapper {
+    display: flex;
+}
+.formulate-input-label{
+    color: black;
+    width: 80px;
+    line-height: 100% !important;
+    margin-top: 2px;
+}
+.formulate-input-element--group{
+    border-radius: 4px;
+    padding: 2px;
+    margin-left: -5px;
+    
+}
+.formulate-input{
+    padding: 3px;
+}
+textarea:focus, input:focus{
+    outline: none !important;
+  }
+  input{
+    border: 0.5px solid;
+    border-radius: 4px;
+    padding: 5px 10px !important;
+    margin-top:2px !important;
+  }
+  .from{
+    padding:10px 10px
+  }
+  .table-box{
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    color:black
+  }
+  .table-box1{
+    border-top: 1px solid;
+    /* border-bottom: 1px solid; */
+    color:black;
+    float: right;
+    
+    margin-top: 5%;
+    padding-top: 5px;
+
+  }
+  a.formulate-input-group-repeatable-remove {
+    background: blue;
+    background: url("./../assets/delete.png") no-repeat;
+    color: transparent;
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    position: relative;
+    top: 30px;
+}
+.attendee{
+    display: flex;
+    padding-left: 20px;
+    width: 200px;
+}
+input#formulate---435 {
+    width: 150px;
+}
+/* .rate{
+    width: 100px;
+} */
+.amount{
+    width:150px
+}
+button.remove {
+    position: relative;
+    /* top: 36px; */
+}
+.table-boxs {
+    /* margin-left: 10px; */
+    display: inline-block;
+    padding-top: 10px;
+}
+input.desc {
+    margin: 5px 0px;
+}
+button.add {
+    position: relative;
+    top: 15px;
+    right: 28px;
+}
+.sub-total.table-box {
+    float: right;
+    /* width: 270px; */
+    padding: 10px;
+    padding-top: 20px;
+}
+td {
+    min-width: 110px;
+}
+body{
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size:14px !important;
+}
+.image-preview{
+    /* float: right !important; */
+}
+input.file {
+    display: none;
+}
+
+
+.tr.bord {
+    border-top: 2px dotted;
+    padding: 2px !important;
+    margin-top: 2px !important;
+}
