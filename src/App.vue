@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <nav class="page">
       <span class="text-center p-4 mr-3 inline-block shadow-md shadow-green-600 rounded-md shadow-inner"><router-link to="/">Edit</router-link> </span>
-      <span class="text-center p-4 inline-block shadow-md shadow-green-600 rounded-md shadow-inner"><router-link to="/about">Preview</router-link></span>
+      <span class="text-center p-4 inline-block shadow-md shadow-green-600 rounded-md shadow-inner"><router-link to="/preview">Preview</router-link></span>
     </nav>
     <router-view/>
   </div>
