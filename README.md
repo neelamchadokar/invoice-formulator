@@ -1,4 +1,4 @@
-# invoice-forms
+# invoice-formulator
 
 ## Project setup
 ```
