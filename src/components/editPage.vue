@@ -148,7 +148,9 @@
            <input class="name" type="" name="" value="" v-model="item.name" placeholder="item name">
           <input class="rate mx-2" type="number" min=0 max="9999999" name="" value="" v-model="item.rate" placeholder="rate"> *
           <input class="rate mx-2" type="number" name="" min=0 max="999" value="" v-model="item.quantity" placeholder="quantity"> =
-          <input class="amount bg-gray-100" type="number" name="" min=0 value="" :placeholder="item.rate * item.quantity" disabled>
+          <input class="amount bg-gray-100" type="number" name="" min=0 value="" :placeholder="+item.rate * item.quantity" disabled>
+          <br>
+            <input class="amount bg-gray-100" type="number" name="" min=0 value="" :placeholder="item.rate * item.quantity" disabled>
           <br>
           <span class="">
             <input class="desc" type="" name="" value="" v-model="item.desc" placeholder="description">
@@ -159,20 +161,20 @@
         <div class="sub-total table-box">
           <table>
             <tr>
-              <td>SubTotal</td><td class="text-right">$ {{subtotal}}</td>
+              <td>SubTotal</td><td class="text-right">{{iCurrency}} {{subtotal}}</td>
             </tr>
             <tr v-if="(tax)">
-              <td>Tax ({{tax}}%)</td><td class="text-right">$ {{taxed}}</td>
+              <td>Tax ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td> Tax Deducted({{deduct}}%)</td><td class="text-right">-$ {{deducted}}</td>
+              <td> Tax Deducted({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td>Discount ({{Discount}}%)</td><td class="text-right">-$ {{discounted}}</td>
+              <td>Discount ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
             </tr>
             <br><br>
             <tr class="">
-              <td>Amount Due</td><td class="text-right">$ {{totalValue}}</td>
+              <td>Amount Due</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
             </tr>
           </table>
         </div>
@@ -186,7 +188,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import { mapState, mapGetters } from 'vuex';
+import { mapState,mapGetters} from 'vuex';
 export default {
   name: "HelloWorld",
   props: {
@@ -295,7 +297,7 @@ export default {
     }
   },
   computed:{
-    ...mapState(['itemsDetails','iTitle','logo','subtotal','InvoiceValues','tax','Discount','deduct','resetForm','notes']),
+    ...mapState(['itemsDetails','iTitle','logo','subtotal','InvoiceValues','tax','Discount','deduct','resetForm','notes','iCurrency']),
     ...mapGetters(['taxed','deducted','discounted','totalValue']),
     data(){
       return{
@@ -315,7 +317,8 @@ export default {
       return sum;
     }
   },
-  created(){
+
+created(){
     console.log(this.InvoiceValues,'create')
     this.formValues=JSON.parse(this.InvoiceValues)
     this.items=JSON.parse(this.itemsDetails)

@@ -41,10 +41,9 @@ textarea:focus, input:focus{
     /* border-bottom: 1px solid; */
     color:black;
     float: right;
-    
     margin-top: 5%;
     padding-top: 5px;
-
+    display: grid;
   }
   a.formulate-input-group-repeatable-remove {
     background: blue;
@@ -94,7 +93,8 @@ button.add {
     padding-top: 20px;
 }
 td {
-    min-width: 110px;
+    min-width: 80px;
+    /* text-align: right !important */
 }
 body{
     margin: 0 !important;

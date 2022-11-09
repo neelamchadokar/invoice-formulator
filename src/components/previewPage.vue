@@ -1,5 +1,6 @@
 <template lang="">
-    <div style="max-width: 800px;" class="p-10 pb-12 top">
+  <div>
+    <div style="max-width: 800px;" class="p-8 pb-12 top">
         <div class="head-title flex justify-between">
             <div class="logo ">
                 <span style="float:left;font-weight:600;" class="upper"><h5>{{iTitle}}</h5></span><br>
@@ -18,8 +19,9 @@
                 <p>{{this.formFields.businessPhone}}</p>
             </div>
         </div>
-        <div class="bill grid grid-cols-4">
-            <div class="business flex flex-col text-left">
+        <div class="bill grid grid-flow-col">
+            <div>
+              <div class="business flex flex-col text-left pr-2">
                 <p class="light">BILL TO</p>
                 <p>{{this.formFields.cName}}</p>
                 <span v-if="this.formFields.cAddress">
@@ -29,21 +31,25 @@
                 <p>{{this.formFields.cEmail}}</p>
                 <p>{{this.formFields.cPhone}}</p>
             </div>
-            <div class="business flex flex-col text-left">
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3" >
+              <div class="business flex flex-col text-left">
                 <p class="light">Created Date</p>
                 <p>{{this.formFields.iDate}}</p>
-                <div class="business flex flex-col text-left pt-4">
-                <p class="light">Due Date</p>
-                <p>{{this.formFields.dueDate}}</p>
+               
             </div>
+             <div class="business flex flex-col text-left ">
+                <p class="light" v-if="this.formFields.dueDate">Due Date</p>
+                <p>{{this.formFields.dueDate}}</p>
             </div>
             <div class="business flex flex-col text-left">
                 <p class="light">Amount due</p>
-                <p>${{totalValue}}</p>
+                <p>{{iCurrency}} {{totalValue}}</p>
             </div>
             <div class="business flex flex-col text-left">
                 <p class="light">Invoice number</p>
                 <p class="upper">{{this.formFields.iNumber}}</p>
+            </div>
             </div>
         </div>
         <div class="topB">
@@ -52,7 +58,7 @@
         <span class="light">{{ row.label.toUpperCase() }}</span>
       </template>
               <template #head(rate)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+        <span class="light" style="text-align:right !important">{{ row.label.toUpperCase() }}</span>
       </template>
               <template #head(quantity)="row">
         <span class="light">{{ row.label.toUpperCase() }}</span>
@@ -62,7 +68,7 @@
       </template>
             <template #cell(amount)="row">
                 <div class="">
-                    {{row.item.rate * row.item.quantity}}
+                  {{iCurrency}} {{row.item.rate * row.item.quantity}}
                 </div>
             </template>
             <template #cell(name)="row">
@@ -74,28 +80,42 @@
             </template>
           </b-table>
         </div>
-        <div class="sub-total table-box1">
+        <div class="grid grid-cols-2">
+            <div>
+              <!-- <p class="light p-0 m-0">Invoice total</p>
+              <h4 class="text-left p-0 m-0">{{iCurrency}} {{subTotal}}</h4>
+              <br>
+              <p class="light p-0 m-0" v-if="this.formFields.dueDate">Due date</p>
+              <p class="text-left p-0 m-0">{{this.formFields.dueDate}}</p> -->
+            </div>
+            <div class="sub-total table-box1">
           <table>
             <tr>
-              <td class="text-left">SubTotal</td><td class="text-right">$ {{subTotal}}</td>
+              <td class="text-left">SubTotal</td><td class="text-right">{{iCurrency}} {{subTotal}}</td>
             </tr>
             <tr v-if="(tax)">
-              <td class="text-left">Tax ({{tax}}%)</td><td class="text-right">$ {{taxed}}</td>
+              <td class="text-left">Tax ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td class="text-left"> Tax Deducted({{deduct}}%)</td><td class="text-right">-$ {{deducted}}</td>
+              <td class="text-left"> Tax Deducted({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td class="text-left">Discount ({{Discount}}%)</td><td class="text-right">-$ {{discounted}}</td>
+              <td class="text-left">Discount ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
             </tr>
             <br><br>
             <tr class="">
-              <td class="text-left">Amount Due</td><td class="text-right">$ {{totalValue}}</td>
+              <td class="text-left">Amount Due</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
             </tr>
           </table>
           <br><br>
         </div>
-    </div>
+          </div>
+          <div class="text-left flex">
+            <br><br>
+            <span>{{notes}}</span>
+          </div>
+        <br>
+    </div></div>
 </template>
 <script>
 import { mapState ,mapGetters} from 'vuex';
@@ -107,14 +127,14 @@ export default {
           {
             key: 'name',
             label: 'Description',
-            thClass:"light"
+            thClass:"light",
+            class:'desc'
           },
           {
             key: 'rate',
             sortable: false,
             label: 'Rate',
-            class:'text-center',
-            thClass:'light'
+            class:'text-right',
             
           },
           {
@@ -135,7 +155,7 @@ export default {
       }
     },
     computed:{
-        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme']),
+        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes']),
     ...mapGetters(['taxed','deducted','discounted','totalValue']),
     },
     created(){
@@ -146,6 +166,7 @@ export default {
 }
 </script>
 <style scoped lang="css">
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
   body{
     margin: 0 !important;
     padding: 0 !important;

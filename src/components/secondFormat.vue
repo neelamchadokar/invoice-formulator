@@ -1,8 +1,8 @@
 <template lang="">
-    <div class="preview p-10 max-w-[800px] top">
+    <div class="preview p-8 px-4 max-w-[800px] top">
         <div class="grid grid-cols-2">
             <div>
-                <h2 class="uppercase text-left font-medium">INVOICE</h2>
+                <h2 class="upper text-left font-medium">INVOICE</h2>
                 <div><br>
                     <table >
                         <tr>
@@ -11,7 +11,7 @@
                             
                         </tr>
                         <tr>
-                            <td ><span class="float-left" >{{this.formFields.iNumber}}</span></td>
+                            <td ><span class="float-left upper" >{{this.formFields.iNumber}}</span></td>
                             <td><span class="text-center" >{{this.formFields.iDate}}</span></td>
                         </tr>
                     </table>
@@ -22,7 +22,7 @@
                 </div>
         </div>
         <div class="grid grid-cols-2">
-          <div class="business flex flex-col text-left">
+          <div class="business flex flex-col text-left pr-2">
             <br>
                 <p class="light">BILL TO</p>
                 <p>{{this.formFields.cName}}</p>
@@ -49,7 +49,7 @@
         <span class="light">{{ row.label.toUpperCase() }}</span>
       </template>
               <template #head(rate)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+        <span class="light" style="text-align:right !important">{{ row.label.toUpperCase() }}</span>
       </template>
               <template #head(quantity)="row">
         <span class="light">{{ row.label.toUpperCase() }}</span>
@@ -59,7 +59,7 @@
       </template>
             <template #cell(amount)="row">
                 <div class="">
-                    {{row.item.rate * row.item.quantity}}
+                    {{iCurrency}} {{row.item.rate * row.item.quantity}}
                 </div>
             </template>
             <template #cell(name)="row">
@@ -73,32 +73,36 @@
           <div class="grid grid-cols-2">
             <div>
               <p class="light p-0 m-0">Invoice total</p>
-              <h4 class="text-left p-0 m-0">$ {{subTotal}}</h4>
+              <h4 class="text-left p-0 m-0">{{iCurrency}} {{subTotal}}</h4>
               <br>
-              <p class="light p-0 m-0">Due date</p>
+              <p class="light p-0 m-0" v-if="this.formFields.dueDate">Due date</p>
               <p class="text-left p-0 m-0">{{this.formFields.dueDate}}</p>
             </div>
-            <div class="sub-total table-box1">
+            <div class="sub-total table-box1 px-4 mr-2">
           <table>
             <tr>
-              <td class="text-left">SubTotal</td><td class="text-right">$ {{subTotal}}</td>
+              <td class="text-left">SubTotal</td><td class="text-right">{{iCurrency}} {{subTotal}}</td>
             </tr>
             <tr v-if="(tax)">
-              <td class="text-left">Tax ({{tax}}%)</td><td class="text-right">$ {{taxed}}</td>
+              <td class="text-left">Tax ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td class="text-left"> Tax Deducted({{deduct}}%)</td><td class="text-right">-$ {{deducted}}</td>
+              <td class="text-left"> Tax Deducted({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td class="text-left">Discount ({{Discount}}%)</td><td class="text-right">-$ {{discounted}}</td>
+              <td class="text-left">Discount ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
             </tr>
             <br><br>
             <tr class="">
-              <td class="text-left">Amount Due</td><td class="text-right">$ {{totalValue}}</td>
+              <td class="text-left">Amount Due</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
             </tr>
           </table>
           <br><br>
         </div>
+          </div>
+          <div class="text-left flex">
+            <br><br>
+            <span>{{notes}}</span>
           </div>
     </div>
 </template>
@@ -118,8 +122,7 @@ export default {
             key: 'rate',
             sortable: false,
             label: 'Rate',
-            class:'text-center space',
-            thClass:'light '
+            class:'text-right space',
             
           },
           {
@@ -140,7 +143,7 @@ export default {
       }
     },
     computed:{
-        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme']),
+        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes']),
     ...mapGetters(['taxed','deducted','discounted','totalValue']),
     },
     created(){
@@ -151,9 +154,7 @@ export default {
 }
 </script>
 <style scoped lang="css">
-    .business {
-    line-height: 90%;
-}
+   @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap'); 
 .space{
   max-width: 25%;
     width: 22%;

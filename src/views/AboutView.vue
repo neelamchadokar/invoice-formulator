@@ -102,6 +102,7 @@ export default {
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
 section.content-wrapper {
     width: auto !important;
 }

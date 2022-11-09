@@ -15,7 +15,8 @@ export default new Vuex.Store({
     Discount:0,
     resetForm:false,
     theme:'#94a3b8',
-    notes:''
+    notes:'',
+    iCurrency:'$'
   },
   getters: {
     taxed(state){
@@ -28,13 +29,16 @@ export default new Vuex.Store({
       return (state.subTotal * state.Discount)/100
     },
     totalValue(state,getters){
-      return Math.round(state.subTotal + getters.taxed -getters.discounted - getters.deducted )
+      return Math.round((state.subTotal + getters.taxed -getters.discounted - getters.deducted)*100)/100
     }
   },
   mutations: {
     reset(state,val){
       state.resetForm=val
       
+    },
+    setCurrency(state,val){
+      state.iCurrency=val
     },
     setTheme(state,val){
       state.theme=val
