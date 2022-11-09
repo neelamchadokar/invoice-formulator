@@ -30,18 +30,19 @@
                     <p>{{this.formFields.cAddress[0].address}}</p>
                 <p>{{this.formFields.cAddress[0].city}}</p>
                 <p>{{this.formFields.cAddress[0].zipcode}}</p></span>
-                <p>{{this.formFields.cEmail}}</p>
                 <p>{{this.formFields.cPhone}}</p>
+                <p>{{this.formFields.cEmail}}</p>
             </div>
             <div class="business flex flex-col text-left">
                 <p class="upper font-bold">{{this.formFields.Name}}</p>
+                <p>{{this.formFields.email}}</p>
                 <span v-if="this.formFields.address">
-                    <p>{{this.formFields.address[0].address1}}</p>
+                <p>{{this.formFields.address[0].address1}}</p>
                 <p>{{this.formFields.address[0].city}}</p>
                 <p>{{this.formFields.address[0].zipcode}}</p></span>
-                <p>{{this.formFields.email}}</p>
                 <p>{{this.formFields.phone}}</p>
                 <p>{{this.formFields.businessPhone}}</p>
+                
             </div>
         </div>
         <b-table :items="items" :fields="fields"  fixed>

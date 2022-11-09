@@ -48,23 +48,23 @@ export default {
     watch:{
         addTax(){
             this.setTax({
-                aTax:this.addTax,
-                dTax:this.deductTax,
-                disc:this.discount
+                aTax:this.addTax*1,
+                dTax:this.deductTax*1,
+                disc:this.discount*1
             })
         },
         deductTax(){
             this.setTax({
-                aTax:this.addTax,
-                dTax:this.deductTax,
-                disc:this.discount
+                aTax:this.addTax*1,
+                dTax:this.deductTax*1,
+                disc:this.discount*1
             })
         },
         discount(){
             this.setTax({
-                aTax:this.addTax,
-                dTax:this.deductTax,
-                disc:this.discount
+                aTax:this.addTax*1,
+                dTax:this.deductTax*1,
+                disc:this.discount*1
             })
         },
         currency(){

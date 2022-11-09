@@ -32,7 +32,7 @@
                 <p>{{this.formFields.cPhone}}</p>
             </div>
             </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3" >
+            <div class="grid grid-cols-1 sm:grid-cols-2" >
               <div class="business flex flex-col text-left">
                 <p class="light">Created Date</p>
                 <p>{{this.formFields.iDate}}</p>
@@ -80,7 +80,7 @@
             </template>
           </b-table>
         </div>
-        <div class="grid grid-cols-2">
+        <div class="flex justify-end float-right pr-4">
             <div>
               <!-- <p class="light p-0 m-0">Invoice total</p>
               <h4 class="text-left p-0 m-0">{{iCurrency}} {{subTotal}}</h4>
