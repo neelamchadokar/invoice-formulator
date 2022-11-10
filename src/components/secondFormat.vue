@@ -2,17 +2,16 @@
     <div class="preview p-8 px-4 max-w-[800px] top">
         <div class="grid grid-cols-2">
             <div>
-                <h2 class="upper text-left font-medium">INVOICE</h2>
+                <h2 class="upper text-left font-medium" style="font-size: 30px;">{{iTitle}}</h2>
                 <div><br>
                     <table >
                         <tr>
                             <td><span class="light float-left">Invoive Number</span></td>
-                            <td><span class="light text-center">Date of issue</span></td>
-                            
+                            <td><span class="light text-center" style="padding-left: 30px;">Date of issue</span></td> 
                         </tr>
                         <tr>
                             <td ><span class="float-left upper" >{{this.formFields.iNumber}}</span></td>
-                            <td><span class="text-center" >{{this.formFields.iDate}}</span></td>
+                            <td><span class="text-center" style="padding-left: 30px;">{{this.formFields.iDate}}</span></td>
                         </tr>
                     </table>
                 </div>
@@ -26,14 +25,16 @@
             <br>
                 <p class="light">BILL TO</p>
                 <p>{{this.formFields.cName}}</p>
+                <p>{{this.formFields.cEmail}}</p>
                 <span v-if="this.formFields.cAddress">
                     <p>{{this.formFields.cAddress[0].address}}</p>
                 <p>{{this.formFields.cAddress[0].city}}</p>
                 <p>{{this.formFields.cAddress[0].zipcode}}</p></span>
                 <p>{{this.formFields.cPhone}}</p>
-                <p>{{this.formFields.cEmail}}</p>
+                
             </div>
             <div class="business flex flex-col text-left">
+              <br>
                 <p class="upper font-bold">{{this.formFields.Name}}</p>
                 <p>{{this.formFields.email}}</p>
                 <span v-if="this.formFields.address">
@@ -47,7 +48,7 @@
         </div>
         <b-table :items="items" :fields="fields"  fixed>
           <template #head(name)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+        <span class="light text-left">{{ row.label.toUpperCase() }}</span>
       </template>
               <template #head(rate)="row">
         <span class="light" style="text-align:right !important">{{ row.label.toUpperCase() }}</span>
@@ -72,9 +73,9 @@
             </template>
           </b-table>
           <div class="grid grid-cols-2">
-            <div>
+            <div style="text-align:left !important;">
               <p class="light p-0 m-0">Invoice total</p>
-              <h4 class="text-left p-0 m-0">{{iCurrency}} {{subTotal}}</h4>
+              <h4 class="text-left p-0 m-0" style="font-size:24px !important;">{{iCurrency}} {{subTotal}}</h4>
               <br>
               <p class="light p-0 m-0" v-if="this.formFields.dueDate">Due date</p>
               <p class="text-left p-0 m-0">{{this.formFields.dueDate}}</p>
@@ -117,7 +118,7 @@ export default {
           {
             key: 'name',
             label: 'Description',
-            thClass:"light"
+            thClass:"light text-left"
           },
           {
             key: 'rate',
@@ -166,7 +167,6 @@ export default {
  .light{
     color:v-bind(theme);
     font-weight: 500;
-    text-align: left;
 }
 th{
  color: v-bind(theme) !important;
@@ -177,5 +177,11 @@ th{
 .topB{
   border-top:2px solid v-bind(theme);
   margin-top:5%;padding-top:5px;
+}
+.business {
+  height: auto;
+    min-height: 220px !important;
+    /* max-width: 50%; */
+    word-wrap: break-word;
 }
 </style>

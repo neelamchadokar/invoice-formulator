@@ -9,10 +9,9 @@
             <div class="bg-gray-200 rounded-md p-2 mt-2">
                 <p>Select Currency: <b>{{currency}}</b></p>
                 <select name="" id="" v-model="currency">
-                    <option :value=cur.symbol v-for="cur in currencies" :key="cur">{{cur.code}} ({{cur.symbol}}): {{cur.name}}</option>
+                    <option :value=cur.symbol v-for="cur in currencydata" :key="cur">{{cur.code}} ({{cur.symbol}}): {{cur.name}}</option>
                 </select>
             </div>
-            
         </div>
     </div>
 </template>
@@ -20,6 +19,7 @@
 /* eslint-disable */
 import { mapMutations ,mapState} from 'vuex';
 import axios from 'axios'
+import CurrencyData from './../store/currencyJson.json';
 export default {
     data(){
         return{
@@ -28,7 +28,8 @@ export default {
             discount:0,
             currencies:{},
             currency:'$',
-            defaultColors:['#94a3b8','#3490dc','#ffed4a','#e3342f']
+            defaultColors:['#94a3b8','#3490dc','#ffed4a','#e3342f'],
+            currencydata: CurrencyData,
         }
     },
     methods:{

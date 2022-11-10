@@ -3,7 +3,7 @@
     <div style="max-width: 800px;" class="p-8 pb-12 top">
         <div class="head-title flex justify-between">
             <div class="logo ">
-                <span style="float:left;font-weight:600;" class="upper"><h5>{{iTitle}}</h5></span><br>
+                <span style="float:left; font-size: 24px;font-weight: 500 !important;" class="upper"><h5>{{iTitle}}</h5></span><br>
                 <div v-if="logo" class="p-2 pt-4">
                     <img :src="logo" width="130px" height="130px" alt="">
                 </div>
@@ -19,20 +19,21 @@
                 <p>{{this.formFields.businessPhone}}</p>
             </div>
         </div>
-        <div class="bill grid grid-flow-col">
+        <div class="bill grid grid-cols-2">
             <div>
-              <div class="business flex flex-col text-left pr-2">
+              <div class="business business1 flex flex-col text-left pr-2">
                 <p class="light">BILL TO</p>
                 <p>{{this.formFields.cName}}</p>
+                <p>{{this.formFields.cEmail}}</p>
                 <span v-if="this.formFields.cAddress">
                     <p>{{this.formFields.cAddress[0].address}}</p>
                 <p>{{this.formFields.cAddress[0].city}}</p>
                 <p>{{this.formFields.cAddress[0].zipcode}}</p></span>
-                <p>{{this.formFields.cEmail}}</p>
+                
                 <p>{{this.formFields.cPhone}}</p>
             </div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2" >
+            <div class="grid grid-cols-1" >
               <div class="business flex flex-col text-left">
                 <p class="light">Created Date</p>
                 <p>{{this.formFields.iDate}}</p>
@@ -55,7 +56,7 @@
         <div class="topB">
             <b-table :items="items" :fields="fields" borderless fixed>
               <template #head(name)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+        <span class="light text-left">{{ row.label.toUpperCase() }}</span>
       </template>
               <template #head(rate)="row">
         <span class="light" style="text-align:right !important">{{ row.label.toUpperCase() }}</span>
@@ -80,7 +81,7 @@
             </template>
           </b-table>
         </div>
-        <div class="flex justify-end float-right pr-4">
+        <div class="grid grid-cols-2 pr-4">
             <div>
               <!-- <p class="light p-0 m-0">Invoice total</p>
               <h4 class="text-left p-0 m-0">{{iCurrency}} {{subTotal}}</h4>
@@ -127,8 +128,8 @@ export default {
           {
             key: 'name',
             label: 'Description',
-            thClass:"light",
-            class:'desc'
+            thClass:"light text-left",
+            class:'desc text-left'
           },
           {
             key: 'rate',
@@ -175,10 +176,15 @@ export default {
 :root {
     --var-txt-color: v-bind(theme);
  }
+ .business1 {
+  height: auto;
+    min-height: 220px !important;
+    /* max-width: 50%; */
+    word-wrap: break-word;
+}
  .light{
     color:v-bind(theme);
     font-weight: 500;
-    text-align: left;
 }
 .top{
   border-top: 10px solid v-bind(theme);

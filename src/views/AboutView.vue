@@ -112,7 +112,6 @@ section.content-wrapper {
  .light{
     color:v-bind(myColor);
     font-weight: 500;
-    text-align: left;
     text-transform: uppercase;
 }
 .top{
