@@ -17,6 +17,11 @@
   text-align: center;
   color: #2c3e50;
 }
+img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+    object-fit: contain !important;
+}
 nav {
   padding: 30px;
 }

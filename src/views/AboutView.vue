@@ -22,7 +22,7 @@
         @hasGenerated="hasGenerated($event)"
         ref="html2Pdf"
     >
-        <section slot="pdf-content" style="width:auto">
+        <section slot="pdf-content" style="width:auto;height: auto; min-height: 850px !important;">
             <!-- PDF Content Here -->
             <div v-if="format=='format1'">
               <previewPage/>

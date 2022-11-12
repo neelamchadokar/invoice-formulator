@@ -16,7 +16,15 @@ export default new Vuex.Store({
     resetForm:false,
     theme:'#94a3b8',
     notes:'',
-    iCurrency:'$'
+    iCurrency:'$',
+    itemName:'Item',
+    rName:'Rate',
+    qName:'Quantity',
+    aName:'Amount',
+    tName:'Tax',
+    dT_Name:'Deducted Tax',
+    discName:'Discount',
+    bName:'Balance Due'
   },
   getters: {
     taxed(state){
@@ -30,7 +38,7 @@ export default new Vuex.Store({
     },
     totalValue(state,getters){
       return Math.round((state.subTotal + getters.taxed -getters.discounted - getters.deducted)*100)/100
-    }
+    },
   },
   mutations: {
     reset(state,val){
@@ -51,12 +59,21 @@ export default new Vuex.Store({
       state.logo=param.logo
       state.iTitle=param.title
       state.notes=param.notes
+      state.itemName=param.iName
+      state.rName=param.iRname
+      state.qName=param.iQname
+      state.aName=param.iAname
+      state.bName=param.iBname
+      state.terms=param.terms
       console.log(state.InvoiceValues,'val')
     },
     setTax(state,param){
       state.tax=param.aTax
       state.deduct=param.dTax
       state.Discount=param.disc
+      state.tName=param.tName
+      state.dT_Name=param.dT_Name
+      state.discName=param.discName
     }
   },
   actions: {

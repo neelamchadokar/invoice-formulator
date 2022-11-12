@@ -1,6 +1,7 @@
 <template lang="">
   <div>
-    <div style="max-width: 800px;" class="p-8 pb-12 top">
+    <div style="max-width: 800px;height: auto;
+    min-height: 750px !important;" class="p-8 pb-12 top">
         <div class="head-title flex justify-between">
             <div class="logo ">
                 <span style="float:left; font-size: 24px;font-weight: 500 !important;" class="upper"><h5>{{iTitle}}</h5></span><br>
@@ -44,7 +45,7 @@
                 <p>{{this.formFields.dueDate}}</p>
             </div>
             <div class="business flex flex-col text-left">
-                <p class="light">Amount due</p>
+                <p class="light">{{bName}}</p>
                 <p>{{iCurrency}} {{totalValue}}</p>
             </div>
             <div class="business flex flex-col text-left">
@@ -55,17 +56,17 @@
         </div>
         <div class="topB">
             <b-table :items="items" :fields="fields" borderless fixed>
-              <template #head(name)="row">
-        <span class="light text-left">{{ row.label.toUpperCase() }}</span>
+              <template #head(name)>
+        <span class="light text-left">{{ itemName.toUpperCase() }}</span>
       </template>
-              <template #head(rate)="row">
-        <span class="light" style="text-align:right !important">{{ row.label.toUpperCase() }}</span>
+              <template #head(rate)>
+        <span class="light" style="text-align:right !important">{{ rName.toUpperCase() }}</span>
       </template>
-              <template #head(quantity)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+              <template #head(quantity)>
+        <span class="light">{{ qName.toUpperCase() }}</span>
       </template>
-              <template #head(amount)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+              <template #head(amount)>
+        <span class="light">{{ aName.toUpperCase() }}</span>
       </template>
             <template #cell(amount)="row">
                 <div class="">
@@ -95,25 +96,30 @@
               <td class="text-left">SubTotal</td><td class="text-right">{{iCurrency}} {{subTotal}}</td>
             </tr>
             <tr v-if="(tax)">
-              <td class="text-left">Tax ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
+              <td class="text-left">{{tName}} ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td class="text-left"> Tax Deducted({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
+              <td class="text-left">{{dT_Name}}({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td class="text-left">Discount ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
+              <td class="text-left">{{discName}} ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
             </tr>
             <br><br>
             <tr class="">
-              <td class="text-left">Amount Due</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
+              <td class="text-left">{{bName}}</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
             </tr>
           </table>
           <br><br>
         </div>
           </div>
-          <div class="text-left flex">
-            <br><br>
-            <span>{{notes}}</span>
+          <div class="text-left flex" v-if="notes">
+            <br>
+            <span>Notes:<br>{{notes}}</span>
+          </div>
+          <br>
+          <div class="text-left flex" v-if="terms">
+            <br>
+            <span>Terms:<br>{{terms}}</span>
           </div>
         <br>
     </div></div>
@@ -156,13 +162,22 @@ export default {
       }
     },
     computed:{
-        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes']),
+        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes','itemName','rName','qName','aName','tName','dT_Name','discName','bName','terms']),
     ...mapGetters(['taxed','deducted','discounted','totalValue']),
+    filterdRows(){
+      console.log(typeof(this.itemsDetails))
+      return ['abc']
+    }
     },
     created(){
     console.log(this.InvoiceValues)
     this.formFields=JSON.parse(this.InvoiceValues)
-    this.items=JSON.parse(this.itemsDetails)
+    // this.items=JSON.parse(this.itemsDetails)
+    var filt =JSON.parse(this.itemsDetails)
+    var filterred = filt.filter((item)=>{
+      return item.name!=''
+    })
+    this.items=filterred
   }
 }
 </script>
@@ -181,6 +196,11 @@ export default {
     min-height: 220px !important;
     /* max-width: 50%; */
     word-wrap: break-word;
+}
+.head-title {
+    background: padding-box;
+    min-height: 121px;
+    height: auto;
 }
  .light{
     color:v-bind(theme);

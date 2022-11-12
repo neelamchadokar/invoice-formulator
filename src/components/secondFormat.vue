@@ -1,6 +1,7 @@
 <template lang="">
-    <div class="preview p-8 px-4 max-w-[800px] top">
-        <div class="grid grid-cols-2">
+    <div class="preview p-8 px-4 max-w-[800px] top" style="max-width: 800px;height: auto;
+    min-height: 750px !important; ">
+        <div class="flex flex-row justify-between">
             <div>
                 <h2 class="upper text-left font-medium" style="font-size: 30px;">{{iTitle}}</h2>
                 <div><br>
@@ -8,10 +9,12 @@
                         <tr>
                             <td><span class="light float-left">Invoive Number</span></td>
                             <td><span class="light text-center" style="padding-left: 30px;">Date of issue</span></td> 
+                            <td><span class="light text-center" v-if="this.formFields.dueDate" style="padding-left: 30px;">Due Date</span></td> 
                         </tr>
                         <tr>
                             <td ><span class="float-left upper" >{{this.formFields.iNumber}}</span></td>
                             <td><span class="text-center" style="padding-left: 30px;">{{this.formFields.iDate}}</span></td>
+                            <td><span class="text-center" style="padding-left: 30px;">{{this.formFields.dueDate}}</span></td>
                         </tr>
                     </table>
                 </div>
@@ -47,17 +50,17 @@
             </div>
         </div>
         <b-table :items="items" :fields="fields"  fixed>
-          <template #head(name)="row">
-        <span class="light text-left">{{ row.label.toUpperCase() }}</span>
+          <template #head(name)>
+        <span class="light text-left">{{ itemName.toUpperCase() }}</span>
       </template>
-              <template #head(rate)="row">
-        <span class="light" style="text-align:right !important">{{ row.label.toUpperCase() }}</span>
+              <template #head(rate)>
+        <span class="light" style="text-align:right !important">{{ rName.toUpperCase() }}</span>
       </template>
-              <template #head(quantity)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+              <template #head(quantity)>
+        <span class="light">{{ qName.toUpperCase() }}</span>
       </template>
-              <template #head(amount)="row">
-        <span class="light">{{ row.label.toUpperCase() }}</span>
+              <template #head(amount)>
+        <span class="light">{{ aName.toUpperCase() }}</span>
       </template>
             <template #cell(amount)="row">
                 <div class="">
@@ -77,8 +80,8 @@
               <p class="light p-0 m-0">Invoice total</p>
               <h4 class="text-left p-0 m-0" style="font-size:24px !important;">{{iCurrency}} {{subTotal}}</h4>
               <br>
-              <p class="light p-0 m-0" v-if="this.formFields.dueDate">Due date</p>
-              <p class="text-left p-0 m-0">{{this.formFields.dueDate}}</p>
+              <!-- <p class="light p-0 m-0" v-if="this.formFields.dueDate">Due date</p>
+              <p class="text-left p-0 m-0">{{this.formFields.dueDate}}</p> -->
             </div>
             <div class="sub-total table-box1 px-4 mr-2">
           <table>
@@ -86,25 +89,30 @@
               <td class="text-left">SubTotal</td><td class="text-right">{{iCurrency}} {{subTotal}}</td>
             </tr>
             <tr v-if="(tax)">
-              <td class="text-left">Tax ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
+              <td class="text-left">{{tName}} ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td class="text-left"> Tax Deducted({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
+              <td class="text-left">{{dT_Name}}({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td class="text-left">Discount ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
+              <td class="text-left">{{discName}} ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
             </tr>
             <br><br>
             <tr class="">
-              <td class="text-left">Amount Due</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
+              <td class="text-left">{{bName}}</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
             </tr>
           </table>
           <br><br>
         </div>
           </div>
-          <div class="text-left flex">
-            <br><br>
-            <span>{{notes}}</span>
+          <div class="text-left flex" v-if="notes">
+            <br>
+            <span>Notes:<br>{{notes}}</span>
+          </div>
+          <br>
+          <div class="text-left flex" v-if="terms">
+            <br>
+            <span>Terms:<br>{{terms}}</span>
           </div>
     </div>
 </template>
@@ -145,13 +153,18 @@ export default {
       }
     },
     computed:{
-        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes']),
+        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes','itemName','rName','qName','aName','tName','dT_Name','discName','bName','terms']),
     ...mapGetters(['taxed','deducted','discounted','totalValue']),
     },
     created(){
     console.log(this.InvoiceValues)
     this.formFields=JSON.parse(this.InvoiceValues)
-    this.items=JSON.parse(this.itemsDetails)
+    // this.items=JSON.parse(this.itemsDetails)
+    var filt =JSON.parse(this.itemsDetails)
+    var filterred = filt.filter((item)=>{
+      return item.name!=''
+    })
+    this.items=filterred
   }
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
-  <div class="flex justify-center text-left">
-    <div class="edit w-auto shadow-xl">
+  <div class="flex justify-center text-left ">
+    <div class="edit w-auto shadow-xl ">
       <div class="head-title from flex justify-around">
         <div>
           <button @click="$refs.file.click()" class="p-2 bg-green-200 rounded-md upload shadow-md shadow-green-400">{{imageData?'Change LOGO':'Upload LOGO'}}</button>
           <input type="file" @change="previewImage" accept="image/*" class="file" ref="file">
-          <span class="image-preview" v-if="imageData.length > 0">
-        <img class="preview" :src="imageData" width="200px" height="200px">
+          <span class="image-preview flex" v-if="imageData.length > 0">
+        <img class="preview" :src="imageData" width="200px" height="200px"><button @click="removeImage" class="bg-red-200 w-6 rounded-lg h-6 text-center justify-center">&times;</button>
       </span>
         </div>
         <div style="float:right">
@@ -133,11 +133,11 @@
       
     />
         </div>
-        <div class="table-box pl-5 py-2 grid grid-cols-4">
-          <span class="text-center">Description</span>
-          <span class="text-center">Rate</span>
-          <span class="text-center">Quantity</span>
-          <span class="text-center">Amount</span>
+        <div class="table-box py-2 grid grid-cols-4">
+          <span class="text-center"><input type="text" class="eNames" placeholder="Item" v-model="e_itemName"></span>
+          <span class="text-center"><input type="text" class="eNames" placeholder="Rate" v-model="e_rName"></span>
+          <span class="text-center"><input type="text" class="eNames" placeholder="Quantity" v-model="e_qName"></span>
+          <span class="text-center"><input type="text" class="eNames" placeholder="Amount" v-model="e_aName"></span>
         </div>
         <div class="desc">
          </div>
@@ -149,8 +149,6 @@
           <input class="rate mx-2" type="number" min=0 max="9999999" name="" value="" v-model="item.rate" placeholder="rate"> *
           <input class="rate mx-2" type="number" name="" min=0 max="999" value="" v-model="item.quantity" placeholder="quantity"> =
           <input class="amount bg-gray-100" type="number" name="" min=0 value="" :placeholder="+item.rate * item.quantity" disabled>
-          <br>
-            <input class="amount bg-gray-100" type="number" name="" min=0 value="" :placeholder="item.rate * item.quantity" disabled>
           <br>
           <span class="">
             <input class="desc" type="" name="" value="" v-model="item.desc" placeholder="description">
@@ -164,25 +162,28 @@
               <td>SubTotal</td><td class="text-right">{{iCurrency}} {{subtotal}}</td>
             </tr>
             <tr v-if="(tax)">
-              <td>Tax ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
+              <td>{{tName}}({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td> Tax Deducted({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
+              <td> {{dT_Name}}({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td>Discount ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
+              <td>{{discName}} ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
             </tr>
             <br><br>
             <tr class="">
-              <td>Amount Due</td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
+              <td><input type="text" placeholder="Item" v-model="e_bName" style="max-width:130px;"></td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
             </tr>
           </table>
         </div>
         <div>
-        <textarea name="" id="" cols="30" rows="5" placeholder="Additional note" class="border-black border-2 p-2" v-model="note"></textarea>
+          <div>Notes</div>
+        <textarea name="" id="" cols="30" rows="1" placeholder="Additional note" style="border: 1px solid;" class="p-2" v-model="note"></textarea>
+          <div>Terms</div>
+        <textarea name="" id="" cols="30" rows="1" placeholder="Additional note" class="p-2" style="border: 1px solid;"  v-model="term"></textarea>
       </div>
+      <br><br>
       </div>
-      
     </div>
 </template>
 
@@ -201,14 +202,20 @@ export default {
       imageData: "",
         items:[{
           id:Date.now(),
-          rate:null,
+          rate:0,
           amount:0,
           quantity:1,
           total:0,
           desc:'',
           name:''
         }],
-        note:''
+        note:'',
+        e_itemName:'Item',
+        e_rName:'Rate',
+        e_qName:'Quantity',
+        e_aName:'Amount',
+        e_bName:'Balance Due',
+        term:''
     };
   },
   watch:{
@@ -222,34 +229,54 @@ export default {
     formValues:{
       handler() {
         console.log('before')
-        this.setValues(this.data)
-      
-      // console.log(this.data,newValue,oldValue)
+        this.setValues(this.dataVal)
+        
+      // console.log(this.dataVal,newValue,oldValue)
       },
       deep:true
     },
     title(){
-      this.setValues(this.data)
+      this.setValues(this.dataVal)
     },
     imageData:{
-      handler() {
-        this.setValues(this.data)
       
-      // console.log(this.data,newValue,oldValue)
+      handler() {
+        console.log('called123')
+        this.setValues(this.dataVal)
+      
+      // console.log(this.dataVal,newValue,oldValue)
       },
       deep:true
     },
     subtotal(){
-      this.setValues(this.data)
+      this.setValues(this.dataVal)
     },
     note(){
-      this.setValues(this.data)
+      this.setValues(this.dataVal)
+    },
+    e_itemName(){
+      this.setValues(this.dataVal)
+    },
+    e_rName(){
+      this.setValues(this.dataVal)
+    },
+    e_qName(){
+      this.setValues(this.dataVal)
+    },
+    e_aName(){
+      this.setValues(this.dataVal)
+    },
+    e_bName(){
+      this.setValues(this.dataVal)
+    },
+    term(){
+      this.setValues(this.dataVal)
     },
     items:{
       handler() {
-        this.setValues(this.data)
+        this.setValues(this.dataVal)
       
-      // console.log(this.data,newValue,oldValue)
+      // console.log(this.dataVal,newValue,oldValue)
       },
       deep:true
     }
@@ -276,10 +303,18 @@ export default {
         reader.readAsDataURL(input.files[0]);
       }
     },
+    removeImage(){
+      // console.log(this.imageData)
+      // this.imageData = null;
+      this.imageData = ""
+      this.$refs.file.value = ""
+      this.setValues(this.dataVal)
+      // Object.assign(this.imageData, this.$options.data())
+    },
     add(){
       let box={
           id:Date.now(),
-          rate:null,
+          rate:0,
           amount:0,
           quantity:1,
           desc:'',
@@ -297,22 +332,30 @@ export default {
     }
   },
   computed:{
-    ...mapState(['itemsDetails','iTitle','logo','subtotal','InvoiceValues','tax','Discount','deduct','resetForm','notes','iCurrency']),
-    ...mapGetters(['taxed','deducted','discounted','totalValue']),
-    data(){
+    ...mapState(['itemsDetails','iTitle','logo','subtotal','InvoiceValues','tax','Discount','deduct','resetForm','notes','iCurrency','itemName','rName','qName','aName','tName','dT_Name','discName','bName']),
+    ...mapGetters(['taxed','deducted','discounted','totalValue','filterItem']),
+    dataVal(){
       return{
         subTotal:this.subtotal,
         title:this.title,
         logo:this.imageData,
         itemsDetails:this.items,
         value:this.formValues,
-        notes:this.note
+        notes:this.note,
+        terms:this.term,
+        iName:this.e_itemName,
+        iRname:this.e_rName,
+        iQname:this.e_qName,
+        iAname:this.e_aName,
+        iBname:this.e_bName
       }
     },
     subtotal(){
       var sum=0
       this.items.forEach(element => {
-        sum+=element.rate * element.quantity
+        if(element.name!=''){
+          sum+=element.rate * element.quantity
+        }
       });
       return sum;
     }
@@ -325,6 +368,11 @@ created(){
     this.imageData=this.logo
     this.title=this.iTitle
     this.note=this.notes
+    this.e_itemName=this.itemName
+        this.e_rName=this.rName
+        this.e_qName=this.qName
+        this.e_aName=this.aName
+        this.e_bName=this.bName
   }
 };
 </script>
@@ -345,5 +393,13 @@ li {
 }
 a {
   color: #42b983;
+}
+input.eNames {
+  width: auto;
+    max-width: 90px;
+    border: none;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    text-align: center;
 }
 </style>

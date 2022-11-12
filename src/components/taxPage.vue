@@ -2,9 +2,9 @@
     <div>
         <div class="flex flex-col text-left">
             <span class="tax-box cursor-pointer w-[225px] mt-4" @click="resetAll">Clear</span>
-            <div class="tax-box tax-grid"><span class="tax ">Add Tax %</span> <input type="number" v-model="addTax" min=0 max="100"></div>
-            <div class="tax-box tax-grid"><span class="tax">Deduct Tax % </span> <input type="number" v-model="deductTax" min=0 max="100"></div>
-            <div class="tax-box tax-grid"><span class="tax">Discount %</span> <input type="number" v-model="discount" min=0 max="100"></div>
+            <div class="tax-box tax-grid"><span class="tax "><input type="text" class="eNames" placeholder="Tax" v-model="taxTitle"> </span> <input type="number" v-model="addTax" min=0 max="100" class="tNames"> %</div>
+            <div class="tax-box tax-grid"><span class="tax"><input type="text" class="eNames" placeholder="Deduct Tax" v-model="deductTitle"> </span> <input type="number" v-model="deductTax" min=0 max="100" class="tNames"> %</div>
+            <div class="tax-box tax-grid"><span class="tax"><input type="text" class="eNames" placeholder="Discount" v-model="discTitle"> </span> <input type="number" v-model="discount" min=0 max="100" class="tNames"> %</div>
             <!-- {{this.currencies}} -->
             <div class="bg-gray-200 rounded-md p-2 mt-2">
                 <p>Select Currency: <b>{{currency}}</b></p>
@@ -30,6 +30,9 @@ export default {
             currency:'$',
             defaultColors:['#94a3b8','#3490dc','#ffed4a','#e3342f'],
             currencydata: CurrencyData,
+            taxTitle:'Tax',
+            deductTitle:'Deducted Tax',
+            discTitle:'Discount'
         }
     },
     methods:{
@@ -48,32 +51,39 @@ export default {
     },
     watch:{
         addTax(){
-            this.setTax({
-                aTax:this.addTax*1,
-                dTax:this.deductTax*1,
-                disc:this.discount*1
-            })
+            this.setTax(this.setTax(this.data2))
         },
         deductTax(){
-            this.setTax({
-                aTax:this.addTax*1,
-                dTax:this.deductTax*1,
-                disc:this.discount*1
-            })
+            this.setTax(this.setTax(this.data2))
         },
         discount(){
-            this.setTax({
-                aTax:this.addTax*1,
-                dTax:this.deductTax*1,
-                disc:this.discount*1
-            })
+            this.setTax(this.data2)
+        },
+        taxTitle(){
+            this.setTax(this.data2)
+        },
+        deductTitle(){
+            this.setTax(this.data2)
+        },
+        discTitle(){
+            this.setTax(this.data2)
         },
         currency(){
             this.setCurrency(this.currency)
         }
     },
     computed:{
-        ...mapState(['tax','deduct','Discount','iCurrency'])
+        ...mapState(['tax','deduct','Discount','iCurrency','tName','dT_Name','discName']),
+        data2(){
+            return{
+                aTax:this.addTax*1,
+                dTax:this.deductTax*1,
+                disc:this.discount*1,
+                tName:this.taxTitle,
+                dT_Name:this.deductTitle,
+                discName:this.discTitle
+            }
+        }
     },
     created(){
         this.addTax=this.tax
@@ -81,6 +91,9 @@ export default {
         this.discount=this.Discount
         this.getCurrency()
         this.currency=this.iCurrency
+        this.taxTitle=this.tName
+        this.deductTitle=this.dT_Name
+        this.discTitle=this.discName
     }
 }
 </script>
@@ -99,5 +112,17 @@ select {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
+}
+input.eNames {
+  width: auto;
+    max-width: 150px;
+    border: none;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    text-align: center;
+}
+input.tNames{
+    width: auto;
+    max-width: 70px;
 }
 </style>
