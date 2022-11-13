@@ -1,7 +1,6 @@
 <template lang="">
   <div>
-    <div style="max-width: 800px;height: auto;
-    min-height: 750px !important;" class="p-8 pb-12 top">
+    <div style="max-width: 800px;" class="p-8 pb-12 top">
         <div class="head-title flex justify-between">
             <div class="logo ">
                 <span style="float:left; font-size: 24px;font-weight: 500 !important;" class="upper"><h5>{{iTitle}}</h5></span><br>
@@ -99,10 +98,13 @@
               <td class="text-left">{{tName}} ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td class="text-left">{{dT_Name}}({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
+              <td class="text-left">{{dT_Name}}({{deduct}}%)</td><td class="text-right">{{iCurrency}} -{{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td class="text-left">{{discName}} ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
+              <td class="text-left">{{discName}} ({{Discount}}%)</td><td class="text-right">{{iCurrency}} -{{discounted}}</td>
+            </tr>
+            <tr v-if="paidAmount">
+              <td class="text-left">{{aPaid}}</td><td class="text-right">{{iCurrency}} -{{paidAmount}}</td>
             </tr>
             <br><br>
             <tr class="">
@@ -162,7 +164,7 @@ export default {
       }
     },
     computed:{
-        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes','itemName','rName','qName','aName','tName','dT_Name','discName','bName','terms']),
+        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes','itemName','rName','qName','aName','tName','dT_Name','discName','bName','terms','paidAmount','aPaid']),
     ...mapGetters(['taxed','deducted','discounted','totalValue']),
     filterdRows(){
       console.log(typeof(this.itemsDetails))
@@ -186,7 +188,6 @@ export default {
   body{
     margin: 0 !important;
     padding: 0 !important;
-    line-height: 80% !important;
 }  
 :root {
     --var-txt-color: v-bind(theme);

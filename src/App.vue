@@ -16,6 +16,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  vertical-align: text-top !important;
+}
+.table-body-text {
+  vertical-align: middle !important;
 }
 img, svg, video, canvas, audio, iframe, embed, object {
     display: block;
@@ -34,5 +38,8 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
-
+p {
+    margin-top: 0;
+    margin-bottom: 0 !important;
+}
 </style>

@@ -1,6 +1,6 @@
 <template lang="">
-    <div class="preview p-8 px-4 max-w-[800px] top" style="max-width: 800px;height: auto;
-    min-height: 750px !important; ">
+    <div class="preview p-8 px-4 max-w-[800px] top" style="max-width: 800px;
+    ">
         <div class="flex flex-row justify-between">
             <div>
                 <h2 class="upper text-left font-medium" style="font-size: 30px;">{{iTitle}}</h2>
@@ -92,10 +92,13 @@
               <td class="text-left">{{tName}} ({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td class="text-left">{{dT_Name}}({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
+              <td class="text-left">{{dT_Name}}({{deduct}}%)</td><td class="text-right">{{iCurrency}} -{{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td class="text-left">{{discName}} ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
+              <td class="text-left">{{discName}} ({{Discount}}%)</td><td class="text-right">{{iCurrency}} -{{discounted}}</td>
+            </tr>
+            <tr v-if="paidAmount">
+              <td class="text-left">{{aPaid}}</td><td class="text-right">{{iCurrency}} -{{paidAmount}}</td>
             </tr>
             <br><br>
             <tr class="">
@@ -114,6 +117,7 @@
             <br>
             <span>Terms:<br>{{terms}}</span>
           </div>
+          <br>
     </div>
 </template>
 <script>
@@ -153,7 +157,7 @@ export default {
       }
     },
     computed:{
-        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes','itemName','rName','qName','aName','tName','dT_Name','discName','bName','terms']),
+        ...mapState(['itemsDetails','iTitle','logo','subTotal','InvoiceValues','tax','Discount','deduct','theme','iCurrency','notes','itemName','rName','qName','aName','tName','dT_Name','discName','bName','terms','paidAmount','aPaid']),
     ...mapGetters(['taxed','deducted','discounted','totalValue']),
     },
     created(){

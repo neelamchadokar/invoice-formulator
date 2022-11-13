@@ -5,6 +5,7 @@
             <div class="tax-box tax-grid"><span class="tax "><input type="text" class="eNames" placeholder="Tax" v-model="taxTitle"> </span> <input type="number" v-model="addTax" min=0 max="100" class="tNames"> %</div>
             <div class="tax-box tax-grid"><span class="tax"><input type="text" class="eNames" placeholder="Deduct Tax" v-model="deductTitle"> </span> <input type="number" v-model="deductTax" min=0 max="100" class="tNames"> %</div>
             <div class="tax-box tax-grid"><span class="tax"><input type="text" class="eNames" placeholder="Discount" v-model="discTitle"> </span> <input type="number" v-model="discount" min=0 max="100" class="tNames"> %</div>
+            <div class="tax-box tax-grid"><span class="tax"><input type="text" class="eNames" placeholder="Amount Paid" v-model="paid"> </span> {{currency}} <input type="number" v-model="paidA" min=0 max="100" class="tNames"></div>
             <!-- {{this.currencies}} -->
             <div class="bg-gray-200 rounded-md p-2 mt-2">
                 <p>Select Currency: <b>{{currency}}</b></p>
@@ -32,7 +33,9 @@ export default {
             currencydata: CurrencyData,
             taxTitle:'Tax',
             deductTitle:'Deducted Tax',
-            discTitle:'Discount'
+            discTitle:'Discount',
+            paid:'Amount Paid',
+            paidA:0
         }
     },
     methods:{
@@ -68,12 +71,18 @@ export default {
         discTitle(){
             this.setTax(this.data2)
         },
+        paid(){
+            this.setTax(this.data2)
+        },
+        paidA(){
+            this.setTax(this.data2)
+        },
         currency(){
             this.setCurrency(this.currency)
         }
     },
     computed:{
-        ...mapState(['tax','deduct','Discount','iCurrency','tName','dT_Name','discName']),
+        ...mapState(['tax','deduct','Discount','iCurrency','tName','dT_Name','discName','paidAmount','aPaid']),
         data2(){
             return{
                 aTax:this.addTax*1,
@@ -81,7 +90,9 @@ export default {
                 disc:this.discount*1,
                 tName:this.taxTitle,
                 dT_Name:this.deductTitle,
-                discName:this.discTitle
+                discName:this.discTitle,
+                paid:this.paid,
+                paidA:this.paidA
             }
         }
     },
@@ -94,6 +105,8 @@ export default {
         this.taxTitle=this.tName
         this.deductTitle=this.dT_Name
         this.discTitle=this.discName
+        this.paid=this.aPaid
+        this.paidA=this.paidAmount
     }
 }
 </script>
@@ -123,6 +136,7 @@ input.eNames {
 }
 input.tNames{
     width: auto;
-    max-width: 70px;
+    max-width: 100px;
+    min-width: 111px;
 }
 </style>

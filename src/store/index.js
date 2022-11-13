@@ -5,16 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    paidAmount:0,
     InvoiceValues:{},
     itemsDetails:[],
-    subTotal:null,
+    subTotal:0,
     logo:null,
     iTitle:'Invoice',
     tax:0,
     deduct:0,
     Discount:0,
     resetForm:false,
-    theme:'#94a3b8',
+    theme:'#000000',
     notes:'',
     iCurrency:'$',
     itemName:'Item',
@@ -24,20 +25,22 @@ export default new Vuex.Store({
     tName:'Tax',
     dT_Name:'Deducted Tax',
     discName:'Discount',
-    bName:'Balance Due'
+    bName:'Balance Due',
+    aPaid:'Amount Paid',
+    Amount:0
   },
   getters: {
     taxed(state){
-      return (state.subTotal * state.tax)/100
+      return Math.round((state.subTotal * state.tax)/100*100)/100
     },
     deducted(state){
-      return (state.subTotal * state.deduct)/100
+      return Math.round((state.subTotal * state.deduct)/100*100)/100
     },
     discounted(state){
-      return (state.subTotal * state.Discount)/100
+      return Math.round((state.subTotal * state.Discount)/100*100)/100
     },
     totalValue(state,getters){
-      return Math.round((state.subTotal + getters.taxed -getters.discounted - getters.deducted)*100)/100
+      return Math.round((state.subTotal + getters.taxed -getters.discounted - getters.deducted -state.paidAmount)*100)/100
     },
   },
   mutations: {
@@ -74,6 +77,8 @@ export default new Vuex.Store({
       state.tName=param.tName
       state.dT_Name=param.dT_Name
       state.discName=param.discName
+      state.aPaid=param.paid
+      state.paidAmount=param.paidA*1
     }
   },
   actions: {

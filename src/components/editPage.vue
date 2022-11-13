@@ -165,15 +165,19 @@
               <td>{{tName}}({{tax}}%)</td><td class="text-right">{{iCurrency}} {{taxed}}</td>
             </tr>
             <tr v-if="deduct">
-              <td> {{dT_Name}}({{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
+              <td> {{dT_Name}}(-{{deduct}}%)</td><td class="text-right">-{{iCurrency}} {{deducted}}</td>
             </tr>
             <tr v-if="Discount">
-              <td>{{discName}} ({{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
+              <td>{{discName}} (-{{Discount}}%)</td><td class="text-right">-{{iCurrency}} {{discounted}}</td>
+            </tr>
+            <tr v-if="paidAmount">
+              <td>{{aPaid}} ({{Discount}}%)</td><td class="text-right">{{iCurrency}} -{{paidAmount}}</td>
             </tr>
             <br><br>
             <tr class="">
               <td><input type="text" placeholder="Item" v-model="e_bName" style="max-width:130px;"></td><td class="text-right">{{iCurrency}} {{totalValue}}</td>
             </tr>
+            <br><br>
           </table>
         </div>
         <div>
@@ -184,6 +188,7 @@
       </div>
       <br><br>
       </div>
+      
     </div>
 </template>
 
@@ -332,7 +337,7 @@ export default {
     }
   },
   computed:{
-    ...mapState(['itemsDetails','iTitle','logo','subtotal','InvoiceValues','tax','Discount','deduct','resetForm','notes','iCurrency','itemName','rName','qName','aName','tName','dT_Name','discName','bName']),
+    ...mapState(['itemsDetails','iTitle','logo','subtotal','InvoiceValues','tax','Discount','deduct','resetForm','notes','iCurrency','itemName','rName','qName','aName','tName','dT_Name','discName','bName','paidAmount','aPaid','terms']),
     ...mapGetters(['taxed','deducted','discounted','totalValue','filterItem']),
     dataVal(){
       return{
@@ -368,6 +373,7 @@ created(){
     this.imageData=this.logo
     this.title=this.iTitle
     this.note=this.notes
+    this.term=this.terms
     this.e_itemName=this.itemName
         this.e_rName=this.rName
         this.e_qName=this.qName

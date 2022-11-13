@@ -22,10 +22,10 @@
         @apply uppercase
     }
     .tax-box{
-        @apply py-3 px-2 bg-gray-200 rounded-xl shadow-xl max-w-[300px]
+        @apply py-3 px-2 bg-gray-200 rounded-xl shadow-xl max-w-[320px]
     }
     .tax-grid{
-        @apply w-[275px] mt-1
+        @apply  mt-1
     }
     .tax{
         @apply pt-2
